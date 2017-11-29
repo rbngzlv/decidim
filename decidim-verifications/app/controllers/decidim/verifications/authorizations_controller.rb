@@ -46,7 +46,7 @@ module Decidim
         end
       end
 
-      protected
+      private
 
       def handler
         @handler ||= Decidim::AuthorizationHandler.handler_for(handler_name, handler_params)

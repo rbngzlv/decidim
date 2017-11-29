@@ -51,8 +51,6 @@ module Decidim
         @terms_and_conditions_page ||= Decidim::StaticPage.find_by(slug: "terms-and-conditions")
       end
 
-      protected
-
       def configure_permitted_parameters
         devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :tos_agreement])
       end

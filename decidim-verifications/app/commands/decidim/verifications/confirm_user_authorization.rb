@@ -33,15 +33,13 @@ module Decidim
         end
       end
 
-      protected
+      private
 
       def confirmation_successful?
         form.verification_metadata.all? do |key, value|
           authorization.verification_metadata[key] == value
         end
       end
-
-      private
 
       attr_reader :authorization, :form
     end

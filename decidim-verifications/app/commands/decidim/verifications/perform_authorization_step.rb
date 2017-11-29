@@ -27,7 +27,7 @@ module Decidim
         broadcast(:ok)
       end
 
-      protected
+      private
 
       def update_verification_data
         authorization.attributes = {
@@ -39,8 +39,6 @@ module Decidim
 
         authorization.save!
       end
-
-      private
 
       attr_reader :authorization, :handler
     end

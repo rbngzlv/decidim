@@ -81,7 +81,7 @@ module Decidim
       )
     end
 
-    protected
+    private
 
     # Overrides devise email required validation.
     # If the user has been deleted or it is managed the email field is not required anymore.
@@ -96,8 +96,6 @@ module Decidim
       return false if managed?
       super
     end
-
-    private
 
     # Changes default Devise behaviour to use ActiveJob to send async emails.
     def send_devise_notification(notification, *args)
