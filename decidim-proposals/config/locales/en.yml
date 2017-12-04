@@ -33,7 +33,6 @@ en:
           step:
             adhesions_blocked: Adhesions blocked
             adhesions_enabled: Adhesions enabled
-            adhesions_hidden: Adhesions hidden
             announcement: Announcement
             comments_blocked: Comments blocked
             creation_enabled: Proposal creation enabled
