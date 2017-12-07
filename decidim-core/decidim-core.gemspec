@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
   s.add_dependency "omniauth-facebook", "~> 4.0.0"
   s.add_dependency "omniauth-google-oauth2", "~> 0.5.0"
   s.add_dependency "omniauth-twitter", "~> 1.4.0"
+  s.add_dependency "paper_trail", "~> 8.0.1"
   s.add_dependency "pg", "~> 0.21.0"
   s.add_dependency "premailer-rails", "~> 1.9.5"
   s.add_dependency "rails", "~> 5.1.3"
@@ -49,6 +50,7 @@ Gem::Specification.new do |s|
   s.add_dependency "spreadsheet", "~> 1.1"
   s.add_dependency "sprockets-es6", "~> 0.9.2"
   s.add_dependency "truncato", "~> 0.7.10"
+  s.add_dependency "valid_email2", "~> 2.1.1"
   s.add_dependency "wisper", "~> 2.0.0"
 
   s.add_dependency "decidim-api", Decidim::Core.version

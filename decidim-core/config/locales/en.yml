@@ -172,6 +172,34 @@ en:
     menu:
       home: Home
       more_information: More information
+    messaging:
+      conversation_mailer:
+        new_conversation:
+          greeting: Hi, %{recipient}!
+          intro: "%{sender} has started a new conversation with you. Click here to see it:"
+          outro: Enjoy decidim!
+          subject: "%{sender} has started a conversation with you"
+        new_message:
+          greeting: Hi, %{recipient}!
+          intro: "%{sender} has posted new messages in your conversation. Click here to see them:"
+          outro: Enjoy decidim!
+          subject: You have new messages from %{sender}
+      conversations:
+        create:
+          error: Conversation not started. Try again later
+        index:
+          no_conversations: You have no conversations yet
+          title: Conversations
+        reply:
+          send: Send
+          title: Reply
+        show:
+          title: Conversation with %{usernames}
+        start:
+          send: Send
+          title: Start a conversation
+        update:
+          error: Message not sent. Try again later
     newsletter_mailer:
       newsletter:
         note: You received this email because you're subscribed to newsletters on %{organization_name}. You can change your settings on your <a href="%{link}">notifications page</a>.
@@ -252,6 +280,8 @@ en:
         close_window: Close window
         share: Share
         share_link: Share link
+      version_author:
+        deleted: Deleted user
   devise:
     invitations:
       edit:
@@ -387,6 +417,13 @@ en:
     wechat_footer: Open your WeChat, click "Discover" button then click the "Scan QR Code" menu.
     weibo: Sina Weibo
     xing: Xing
+  time:
+    formats:
+      day_of_month: "%b %d"
+      day_of_week: "%a"
+      day_of_year: "%d.%m.%y"
+      decidim_short: "%d/%m/%Y %H:%M"
+      time_of_day: "%H:%M"
   views:
     pagination:
       first: "&laquo; First"

@@ -2,7 +2,7 @@
 
 def visit_edit_registrations_page
   within find("tr", text: translated(meeting.title)) do
-    page.find("a.action-icon--registrations").click
+    page.click_link "Registrations"
   end
 end
 
@@ -93,9 +93,7 @@ shared_examples "manage registrations" do
           fill_in_meeting_registration_invite name: registered_user.name, email: registered_user.email
         end
 
-        logout :user
-
-        login_as user, scope: :user
+        relogin_as user
 
         visit last_email_link
 
