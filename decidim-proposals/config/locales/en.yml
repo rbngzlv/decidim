@@ -155,6 +155,7 @@ en:
           random: Random
           recent: Recent
         proposal:
+          creation_date: 'Creation: %{date}'
           view_proposal: View proposal
         show:
           contact: Contact
