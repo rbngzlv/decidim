@@ -22,7 +22,7 @@ module Decidim
       #
       # Returns nothing.
       def call
-        return broadcast(:invalid) unless user.managed? && form.valid?
+        return broadcast(:invalid) unless user.managed? && form.valid? && unique?
 
         create_impersonation_log
         enqueue_expire_job
@@ -46,6 +46,22 @@ module Decidim
         Decidim::Admin::ExpireImpersonationJob
           .set(wait: Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES.minutes)
           .perform_later(user, current_user)
+      end
+
+      def unique?
+        return true if form.unique_id.nil?
+
+        duplicates = Authorization.where(
+          user: form.user.organization.users,
+          name: form.handler_name,
+          unique_id: form.unique_id
+        )
+
+        return true unless duplicates.any?
+
+        form.errors.add(:base, I18n.t("decidim.authorization_handlers.errors.duplicate_authorization"))
+
+        false
       end
     end
   end

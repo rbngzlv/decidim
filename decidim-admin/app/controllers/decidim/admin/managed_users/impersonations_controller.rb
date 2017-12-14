@@ -8,6 +8,8 @@ module Decidim
       # Controller that allows impersonating managed users at the admin panel.
       #
       class ImpersonationsController < Admin::ApplicationController
+        helper Decidim::AuthorizationFormHelper
+
         layout "decidim/admin/users"
 
         skip_authorization_check only: [:index, :close_session]
@@ -19,17 +21,13 @@ module Decidim
         def new
           authorize! :impersonate, user
 
-          @form = form(ImpersonateManagedUserForm).from_params(
-            authorization: {
-              handler_name: user.managed_with
-            }
-          )
+          @form = Decidim::AuthorizationHandler.handler_for(user.managed_with)
         end
 
         def create
           authorize! :impersonate, user
 
-          @form = form(ImpersonateManagedUserForm).from_params(params)
+          @form = Decidim::AuthorizationHandler.handler_for(user.managed_with, handler_params)
 
           ImpersonateManagedUser.call(@form, user, current_user) do
             on(:ok) do
@@ -58,6 +56,10 @@ module Decidim
         end
 
         private
+
+        def handler_params
+          params[:authorization_handler].merge(user: user)
+        end
 
         def user
           @user ||= current_organization.users.managed.find(params[:managed_user_id])

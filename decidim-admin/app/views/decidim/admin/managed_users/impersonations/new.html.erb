@@ -2,10 +2,16 @@
   <%= t('.new_managed_user_impersonation') %>
 </h2>
 
-<%= decidim_form_for(@form, url: managed_user_impersonations_path, html: { class: "form new_managed_user_impersonation" }) do |f| %>
+<%= authorization_form_for(@form, url: managed_user_impersonations_path, html: { class: "form new_managed_user_impersonation" }) do |f| %>
   <div class="card">
     <div class="card-section">
-      <%= render partial: 'form', object: f %>
+      <div class="row column">
+        <% if lookup_context.exists?(@form.to_partial_path, [], true) %>
+          <%= render partial: @form.to_partial_path, locals: { handler: form, form: f } %>
+        <% else %>
+          <%= f.all_fields %>
+        <% end %>
+      </div>
     </div>
   </div>
 

@@ -6,38 +6,18 @@ module Decidim::Admin
   describe ImpersonateManagedUser do
     include ActiveSupport::Testing::TimeHelpers
 
-    subject { described_class.new(form, user, current_user) }
+    subject { described_class.new(handler, user, current_user) }
 
     let(:organization) { create :organization }
     let(:current_user) { create :user, :admin, organization: organization }
     let(:document_number) { "12345678X" }
-    let(:form_params) do
-      {
-        authorization: {
-          handler_name: "dummy_authorization_handler",
-          document_number: document_number
-        }
-      }
-    end
-    let(:form) do
-      ImpersonateManagedUserForm.from_params(
-        form_params
-      ).with_context(
-        current_organization: organization
-      )
-    end
     let(:user) { create :user, :managed, organization: organization }
     let(:handler_document_number) { document_number }
     let(:handler) do
       Decidim::DummyAuthorizationHandler.from_params(
-        document_number: handler_document_number
+        document_number: handler_document_number,
+        user: user
       )
-    end
-    let!(:authorization) do
-      create(:authorization,
-             user: user,
-             name: handler.handler_name,
-             attributes: { unique_id: handler.unique_id })
     end
 
     context "when everything is ok" do
@@ -67,7 +47,7 @@ module Decidim::Admin
     end
 
     context "when the authorization is not valid" do
-      let(:handler_document_number) { "98765432X" }
+      let(:handler_document_number) { "12345678Y" }
 
       it "is not valid" do
         expect { subject.call }.to broadcast(:invalid)
