@@ -62,6 +62,8 @@ ca:
       menu:
         assemblies: Assemblees
         assemblies_submenu:
+          attachment_collections: Col·leccions
+          attachment_files: Fitxers
           attachments: Adjunts
           categories: Categories
           features: Funcionalitats

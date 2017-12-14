@@ -63,6 +63,8 @@ en:
       menu:
         assemblies: Assemblies
         assemblies_submenu:
+          attachment_collections: Collections
+          attachment_files: Files
           attachments: Attachments
           categories: Categories
           features: Features

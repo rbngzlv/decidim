@@ -36,7 +36,7 @@ describe "Invite process administrator", type: :feature do
       end
 
       within ".secondary-nav" do
-        expect(page.text).to eq "Info Steps Features Categories Attachments Process users Moderations"
+        expect(page.text).to eq "Info Steps Features Categories Attachments Collections Files Process users Moderations"
       end
     end
   end
@@ -66,7 +66,7 @@ describe "Invite process administrator", type: :feature do
       end
 
       within ".secondary-nav" do
-        expect(page.text).to eq "Info Steps Features Categories Attachments Process users Moderations"
+        expect(page.text).to eq "Info Steps Features Categories Attachments Collections Files Process users Moderations"
       end
     end
   end

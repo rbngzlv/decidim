@@ -62,6 +62,8 @@ es:
       menu:
         assemblies: Asambleas
         assemblies_submenu:
+          attachment_collections: Colecciones
+          attachment_files: Archivos
           attachments: Archivos adjuntos
           categories: Categorías
           features: Funcionalidades

@@ -18,6 +18,7 @@ module Decidim
           resource :publish, controller: "assembly_publications", only: [:create, :destroy]
           resources :copies, controller: "assembly_copies", only: [:new, :create]
 
+          resources :attachment_collections, controller: "assembly_attachment_collections"
           resources :attachments, controller: "assembly_attachments"
         end
 
