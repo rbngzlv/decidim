@@ -22,7 +22,7 @@ module Decidim
       #
       # Returns nothing.
       def call
-        return broadcast(:invalid) if !user.managed? || !form.valid?
+        return broadcast(:invalid) unless user.managed? && form.valid?
 
         create_impersonation_log
         enqueue_expire_job
