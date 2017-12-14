@@ -22,7 +22,7 @@ module Decidim
       #
       # Returns nothing.
       def call
-        return broadcast(:invalid) if !user.managed? || !authorization_valid?
+        return broadcast(:invalid) if !user.managed? || !form.valid?
 
         create_impersonation_log
         enqueue_expire_job
@@ -33,15 +33,6 @@ module Decidim
       private
 
       attr_reader :current_user, :user, :form
-
-      def authorization_valid?
-        return false unless form.valid?
-        Decidim::Authorization.where(
-          user: user,
-          name: form.authorization.handler_name,
-          unique_id: form.authorization.unique_id
-        ).any?
-      end
 
       def create_impersonation_log
         Decidim::ImpersonationLog.create!(

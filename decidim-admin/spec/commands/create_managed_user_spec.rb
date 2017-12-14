@@ -55,11 +55,6 @@ module Decidim::Admin
           user = Decidim::User.last
           expect(user).to be_managed
         end
-
-        it "authorizes the user" do
-          expect(Decidim::Verifications::AuthorizeUser).to receive(:call).with(form.authorization)
-          command.call
-        end
       end
     end
   end

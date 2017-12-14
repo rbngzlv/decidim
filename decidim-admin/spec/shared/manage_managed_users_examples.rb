@@ -83,7 +83,6 @@ shared_examples "manage managed users examples" do
 
   context "when a manager user already exists" do
     let!(:managed_user) { create(:user, :managed, organization: organization) }
-    let!(:authorization) { create(:authorization, user: managed_user, name: "dummy_authorization_handler", unique_id: "123456789X") }
 
     it "can impersonate the user filling in the correct authorization" do
       impersonate_the_managed_user

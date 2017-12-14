@@ -19,13 +19,11 @@ module Decidim
         def new
           authorize! :impersonate, user
 
-          if handler_name.present?
-            @form = form(ImpersonateManagedUserForm).from_params(
-              authorization: {
-                handler_name: handler_name
-              }
-            )
-          end
+          @form = form(ImpersonateManagedUserForm).from_params(
+            authorization: {
+              handler_name: user.managed_with
+            }
+          )
         end
 
         def create
@@ -63,14 +61,6 @@ module Decidim
 
         def user
           @user ||= current_organization.users.managed.find(params[:managed_user_id])
-        end
-
-        def handler_name
-          authorization.name
-        end
-
-        def authorization
-          @authorization ||= Authorization.where(user: user).first
         end
       end
     end

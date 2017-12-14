@@ -38,21 +38,15 @@ module Decidim
           name: form.name,
           organization: form.current_organization,
           admin: false,
-          managed: true,
+          managed_with: form.authorization.handler_name,
           tos_agreement: true
         )
       end
 
       def authorized_user?
         form.authorization.user = @user
-        Verifications::AuthorizeUser.call(form.authorization) do
-          on(:ok) do
-            return true
-          end
-          on(:invalid) do
-            return false
-          end
-        end
+
+        form.authorization.valid?
       end
     end
   end
