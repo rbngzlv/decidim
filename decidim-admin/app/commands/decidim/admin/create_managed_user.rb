@@ -21,10 +21,7 @@ module Decidim
       def call
         return broadcast(:invalid) if form.invalid?
 
-        transaction do
-          create_managed_user
-          raise ActiveRecord::Rollback unless authorized_user?
-        end
+        create_managed_user
 
         broadcast(:ok)
       end
@@ -38,15 +35,9 @@ module Decidim
           name: form.name,
           organization: form.current_organization,
           admin: false,
-          managed_with: form.authorization.handler_name,
+          managed: true,
           tos_agreement: true
         )
-      end
-
-      def authorized_user?
-        form.authorization.user = @user
-
-        form.authorization.valid?
       end
     end
   end

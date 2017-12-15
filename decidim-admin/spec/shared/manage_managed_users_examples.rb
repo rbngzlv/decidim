@@ -22,78 +22,13 @@ shared_examples "manage managed users examples" do
     end
   end
 
-  shared_examples_for "a single authorization handler enabled situations" do
-    it "creates a managed user filling in the authorization info" do
-      navigate_to_managed_users_page
-
-      click_link "New"
-
-      fill_in_the_managed_user_form
-
-      expect(page).to have_content("successfully")
-      expect(page).to have_content("Foo")
-    end
-  end
-
-  context "when no authorization workflows enabled" do
-    it_behaves_like "a single authorization handler enabled situations"
-  end
-
-  context "when authorization workflows are enabled" do
-    it_behaves_like "a single authorization handler enabled situations" do
-      let(:available_authorizations) do
-        %w(dummy_authorization_handler dummy_authorization_workflow)
-      end
-    end
-  end
-
-  context "when more than one authorization handler enabled" do
-    before do
-      Decidim::Verifications.register_workflow(:another_dummy_authorization_handler) do |workflow|
-        workflow.form = "Decidim::DummyAuthorizationHandler"
-      end
-    end
-
-    after do
-      Decidim::Verifications.unregister_workflow(:another_dummy_authorization_handler)
-    end
-
-    context "and available for the organization" do
-      let(:available_authorizations) { %w(dummy_authorization_handler another_dummy_authorization_handler) }
-
-      it "selects an authorization method and creates a managed user filling in the authorization info" do
-        navigate_to_managed_users_page
-
-        click_link "New"
-
-        expect(page).to have_content(/Select an authorization method/i)
-        expect(page).to have_content(/Step 1 of 2/i)
-
-        click_link "Example authorization", match: :first
-
-        expect(page).to have_content(/Step 2 of 2/i)
-
-        fill_in_the_managed_user_form
-
-        expect(page).to have_content("successfully")
-        expect(page).to have_content("Foo")
-      end
-    end
-  end
-
   context "when a manager user already exists" do
     let!(:managed_user) { create(:user, :managed, organization: organization) }
 
-    it "can impersonate the user filling in the correct authorization" do
-      impersonate_the_managed_user
-
-      expect(page).to have_content("You are impersonating the user #{managed_user.name}")
-      expect(page).to have_content("Your session will expire in #{Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES} minutes")
-    end
-
-    context "when the admin is impersonating that user" do
-      before do
-        impersonate_the_managed_user
+    shared_examples_for "impersonating a user" do
+      it "can impersonate the user filling in the correct authorization" do
+        expect(page).to have_content("You are impersonating the user #{managed_user.name}")
+        expect(page).to have_content("Your session will expire in #{Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES} minutes")
       end
 
       it "closes the current session and check the logs" do
@@ -122,6 +57,62 @@ shared_examples "manage managed users examples" do
         navigate_to_managed_users_page
 
         expect(page).to have_link("Impersonate")
+      end
+    end
+
+    shared_context "with a single step impersonation form" do
+      before do
+        impersonate_the_managed_user
+        fill_in_the_impersonation_form
+      end
+    end
+
+    context "when no authorization workflows enabled" do
+      include_context "with a single step impersonation form"
+
+      it_behaves_like "impersonating a user"
+    end
+
+    context "when authorization workflows are enabled" do
+      let(:available_authorizations) do
+        %w(dummy_authorization_handler dummy_authorization_workflow)
+      end
+
+      include_context "with a single step impersonation form"
+
+      it_behaves_like "impersonating a user"
+    end
+
+    context "when more than one authorization handler enabled" do
+      let(:available_authorizations) do
+        %w(dummy_authorization_handler another_dummy_authorization_handler)
+      end
+
+      before do
+        Decidim::Verifications.register_workflow(:another_dummy_authorization_handler) do |workflow|
+          workflow.form = "Decidim::DummyAuthorizationHandler"
+        end
+      end
+
+      after do
+        Decidim::Verifications.unregister_workflow(:another_dummy_authorization_handler)
+      end
+
+      context "and available for the organization" do
+        before do
+          impersonate_the_managed_user
+
+          expect(page).to have_content(/Select an authorization method/i)
+          expect(page).to have_content(/Step 1 of 2/i)
+
+          click_link "Example authorization", match: :first
+
+          expect(page).to have_content(/Step 2 of 2/i)
+
+          fill_in_the_impersonation_form
+        end
+
+        it_behaves_like "impersonating a user"
       end
     end
 
@@ -166,12 +157,8 @@ shared_examples "manage managed users examples" do
   def fill_in_the_managed_user_form
     within "form.new_managed_user" do
       fill_in :managed_user_name, with: "Foo"
-      fill_in :managed_user_authorization_document_number, with: "123456789X"
-      fill_in :managed_user_authorization_postal_code, with: "08224"
-      page.execute_script("$('#managed_user_authorization_birthday').siblings('input:first').focus()")
     end
 
-    page.find(".datepicker-dropdown .day", text: "12").click
     click_button "Create"
   end
 
@@ -192,8 +179,6 @@ shared_examples "manage managed users examples" do
     within find("tr", text: managed_user.name) do
       click_link "Impersonate"
     end
-
-    fill_in_the_impersonation_form
   end
 
   def simulate_session_expiration

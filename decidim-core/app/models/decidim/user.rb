@@ -33,7 +33,7 @@ module Decidim
     mount_uploader :avatar, Decidim::AvatarUploader
 
     scope :not_deleted, -> { where(deleted_at: nil) }
-    scope :managed, -> { where.not(managed_with: nil) }
+    scope :managed, -> { where(managed: true) }
 
     # Public: Allows customizing the invitation instruction email content when
     # inviting a user.
@@ -64,11 +64,6 @@ module Decidim
     # Check if the user account has been deleted or not
     def deleted?
       deleted_at.present?
-    end
-
-    # Check if the user is a managed user or not
-    def managed?
-      managed_with.present?
     end
 
     def follows?(followable)

@@ -136,7 +136,7 @@ FactoryBot.define do
       email { "" }
       password { "" }
       password_confirmation { "" }
-      managed_with { "dummy_authorization_handler" }
+      managed { true }
     end
   end
 
