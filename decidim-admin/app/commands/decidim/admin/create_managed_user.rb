@@ -31,7 +31,7 @@ module Decidim
 
       private
 
-      attr_reader :form, :user
+      attr_reader :form
 
       def create_managed_user
         @user = Decidim::User.create!(
