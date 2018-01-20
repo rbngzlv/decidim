@@ -14,6 +14,11 @@ en:
             email_outro: You have received this notification because you are following "%{resource_title}" or its author. You can unfollow it from the previous link.
             email_subject: There is a new reply of your comment from %{author_name} in <a href="%{resource_url}">%{resource_title}</a>
             notification_title: There is a new reply of your comment from <a href="%{author_path}">%{author_name} %{author_nickname}</a> in <a href="%{resource_path}">%{resource_title}</a>
+        user_mentioned:
+          email_intro: You has been mentioned
+          email_outro: You have received this notification because you has been mentioned in "%{resource_title}".
+          email_subject: You has been mentioned in <a href="%{resource_url}">%{resource_title}</a>
+          notification_title: You has been mentioned in <a href="%{resource_path}">%{resource_title}</a> by <a href="%{author_path}">%{author_name} %{author_nickname}</a>
       votes:
         create:
           error: There's been errors when voting the comment.
