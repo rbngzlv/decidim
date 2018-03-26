@@ -1,11 +1,13 @@
+<% member_presenter = Decidim::AssemblyMemberPresenter.new(assembly_member) %>
+
 <div class="column">
   <article class="card card--process">
     <div class="card__content">
-      <h4 class="card__title"><%= assembly_member.full_name %></h4>
+      <h4 class="card__title"><%= member_presenter.name %></h4>
       <div class="card__desc">
-        <%= Decidim::AssemblyMemberPresenter.new(assembly_member).position %> <br>
+        <%= member_presenter.position %> <br>
         <%= t(".desiganted_on") %> <%= l assembly_member.designation_date, format: :short %> <br>
-        <span class="card--process__small"><%= Decidim::AssemblyMemberPresenter.new(assembly_member).gender %> / <%= assembly_member.origin %></span>
+        <span class="card--process__small"><%= member_presenter.gender %> / <%= assembly_member.origin %></span>
       </div>
     </div>
   </article>

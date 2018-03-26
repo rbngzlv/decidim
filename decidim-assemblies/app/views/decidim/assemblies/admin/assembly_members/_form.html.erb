@@ -11,6 +11,12 @@
     </div>
 
     <div class="row column">
+      <% picker_options = { id: "decidim_assemblies_assembly_members_user", class: "picker-multiple", name: "assembly_member[user_id]", multiple: false }
+         prompt_params= { url: users_assembly_members_url(assembly_slug: @current_assembly.slug), text: t(".select_user") } %>
+      <%= form.data_picker(:user, picker_options, prompt_params) {|item| { url: "users", text: "#{item.name} (@#{item.nickname})" }} %>
+    </div>
+
+    <div class="row column">
       <%= form.select :position, @form.positions_for_select, { include_blank: t(".select_a_position") }, { multiple: false } %>
     </div>
 

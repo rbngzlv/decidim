@@ -9,6 +9,16 @@ module Decidim
       I18n.t(__getobj__.gender, scope: "decidim.admin.models.assembly_member.genders", default: "-")
     end
 
+    def name
+      name = __getobj__.full_name
+
+      if (user = __getobj__.user.presence)
+        name << " (#{Decidim::UserPresenter.new(user).nickname})"
+      end
+
+      name
+    end
+
     def position
       return __getobj__.position_other if __getobj__.position == "other"
 

@@ -18,12 +18,22 @@ module Decidim
         attribute :designation_mode, String
         attribute :position, String
         attribute :position_other, String
+        attribute :user_id, Integer
 
         validates :full_name, :designation_date, presence: true
         validates :gender, inclusion: { in: Decidim::AssemblyMember::GENDERS }
         validates :position, inclusion: { in: Decidim::AssemblyMember::POSITIONS }
         validates :position_other, presence: true, if: ->(form) { form.position == "other" }
         validates :ceased_date, date: { after: :designation_date, allow_blank: true }
+        validates :user, presence: true, if: proc { |object| object.user_id.present? }
+
+        def map_model(model)
+          self.user_id = model.decidim_user_id
+        end
+
+        def user
+          @user ||= current_organization.users.where(id: user_id).first
+        end
 
         def genders_for_select
           Decidim::AssemblyMember::GENDERS.map do |gender|
