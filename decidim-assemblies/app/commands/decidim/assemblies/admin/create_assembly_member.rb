@@ -34,7 +34,7 @@ module Decidim
 
         private
 
-        attr_reader :form, :assembly, :current_user, :user
+        attr_reader :form, :assembly, :current_user
 
         def create_assembly_member!
           log_info = {
@@ -62,7 +62,7 @@ module Decidim
               :weight
             ).merge(
               assembly: assembly,
-              user: user
+              user: form.user
             ),
             log_info
           )
