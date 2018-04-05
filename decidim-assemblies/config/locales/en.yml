@@ -210,17 +210,17 @@ en:
           form:
             slug_help: 'URL slugs are used to generate the URLs that point to this assembly. Only accepts letters, numbers and dashes, and must start with a letter. Example: %{url}'
         assembly_members:
+          form:
+            select_a_gender: Select a gender
+            select_a_position: Select a position
+            select_user: Select an user
           index:
-            filter_by: Filter by
             filter:
               all: All
               ceased: Ceased
               not_ceased: Not ceased
+            filter_by: Filter by
             search: Search
-          form:
-            select_user: Select an user
-            select_a_gender: Select a gender
-            select_a_position: Select a position
           users:
             close: Close
             current_selection: Current selection
