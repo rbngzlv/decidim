@@ -19,15 +19,6 @@ module Decidim
           sign_in current_user
         end
 
-        describe
-
-        describe "GET users in html format" do
-          it "renders the data-picker user selector" do
-            get :users, format: :html, params: params
-            expect(response).to render_template("decidim/assemblies/admin/assembly_members/_users")
-          end
-        end
-
         describe "GET users in json format" do
           let(:user) { create(:user, organization: organization) }
 

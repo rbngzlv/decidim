@@ -19,16 +19,21 @@ module Decidim
         attribute :position, String
         attribute :position_other, String
         attribute :user_id, Integer
+        attribute :user_picker, String
+        attribute :existing_user, Boolean, default: false
 
-        validates :full_name, :designation_date, presence: true
+        validates :designation_date, presence: true
+        validates :full_name, presence: true, unless: proc { |object| object.existing_user }
         validates :gender, inclusion: { in: Decidim::AssemblyMember::GENDERS }
         validates :position, inclusion: { in: Decidim::AssemblyMember::POSITIONS }
         validates :position_other, presence: true, if: ->(form) { form.position == "other" }
         validates :ceased_date, date: { after: :designation_date, allow_blank: true }
-        validates :user, presence: true, if: proc { |object| object.user_id.present? }
+
+        validate :user_presence, if: proc { |object| object.existing_user }
 
         def map_model(model)
           self.user_id = model.decidim_user_id
+          self.existing_user = self.user_id.present?
         end
 
         def user
@@ -51,6 +56,12 @@ module Decidim
               position
             ]
           end
+        end
+
+        private
+
+        def user_presence
+          errors.add(:user_picker, :blank) if user.blank?
         end
       end
     end
