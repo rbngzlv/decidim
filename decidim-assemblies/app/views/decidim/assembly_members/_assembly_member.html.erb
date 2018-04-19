@@ -1,13 +1,41 @@
 <% member_presenter = Decidim::AssemblyMemberPresenter.new(assembly_member) %>
 
 <div class="column">
-  <article class="card card--process">
+  <article class="card card--member">
     <div class="card__content">
-      <h4 class="card__title"><%= member_presenter.name %></h4>
-      <div class="card__desc">
-        <%= member_presenter.position %> <br>
-        <%= t(".desiganted_on") %> <%= l assembly_member.designation_date, format: :short %> <br>
-        <span class="card--process__small"><%= member_presenter.gender %> / <%= assembly_member.origin %></span>
+      <div class="card__header collapse">
+        <div class="author-data author-data--big">
+          <div class="author-data__main">
+            <div class="author author--flex">
+              <% if (profile_url = member_presenter.profile_url) %>
+                <a href="<%= profile_url %>" class="author__avatar">
+                  <%= image_tag member_presenter.avatar_url(:big) %>
+                </a>
+              <% else %>
+                <span class="author__avatar">
+                  <%= image_tag asset_path("decidim/default-avatar.svg") %>
+                </span>
+              <% end %>
+              <div>
+                <div class="author__name--container">
+                  <a href="user-profile" class="author__name">
+                    <%= member_presenter.name %>
+                  </a>
+                </div>
+                <% if (nickname = member_presenter.nickname) %>
+                  <a href="<%= profile_url %>" class="author__nickname">
+                    <%= nickname %>
+                  </a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card__text card--picture-offset">
+        <div><small><strong><%= member_presenter.position %></strong></small></div>
+        <div class="text-small"><%= t(".desiganted_on") %> <strong> <%= l assembly_member.designation_date, format: :datepicker %></strong></div>
+        <div class="text-small mt-s"><%= member_presenter.personal_information %></div>
       </div>
     </div>
   </article>

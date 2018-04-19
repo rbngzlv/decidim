@@ -47,7 +47,7 @@
           <% if current_participatory_space.members.not_ceased.any? %>
             <li class="<%= "is-active" if is_active_link?(decidim_assemblies.assembly_assembly_members_path(current_participatory_space), :inclusive) %>">
               <%= active_link_to decidim_assemblies.assembly_assembly_members_path(current_participatory_space), class: "process-nav__link", active: :inclusive, class_active: "is-active" do %>
-                <%= icon("people") %>
+                <%= icon("members") %>
                 <%= t ".assembly_member_menu_item" %>
               <% end %>
             </li>

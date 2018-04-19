@@ -225,6 +225,9 @@ en:
             close: Close
             current_selection: Current selection
             select: Select
+      assembly_members:
+        index:
+          members: Members
       assembly_types:
         commission: Comission
         consultative_advisory: Consultative/Advisory
