@@ -14,6 +14,7 @@ require "autoprefixer-rails"
 require "rectify"
 require "doorkeeper"
 require "doorkeeper-i18n"
+require "selectize-rails"
 
 module Decidim
   module Admin

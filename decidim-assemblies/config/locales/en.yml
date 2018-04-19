@@ -216,8 +216,8 @@ en:
             select_a_gender: Select a gender
             select_a_position: Select a position
             select_user: Select an user
-            type: Type
             user: User
+            user_type: User type
           index:
             filter:
               all: All

@@ -86,7 +86,7 @@ module Decidim
               else
                 query = query.where("name ILIKE ?", "%#{params[:term]}%")
               end
-              render json: query.all.collect { |p| [p.id, p.name, p.nickname] }
+              render json: query.all.collect { |p| { value: p.id, label: p.name, caption: "@#{p.nickname}" } }
             end
           end
         end

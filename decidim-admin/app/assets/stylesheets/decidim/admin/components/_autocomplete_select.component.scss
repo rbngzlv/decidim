@@ -1,0 +1,42 @@
+@import "selectize";
+
+.selectize-control{
+  margin-bottom: 1.5rem;
+
+  .selectize-dropdown,
+  .selectize-input,
+  .selectize-input input{
+    font-size: inherit;
+    font-weight: normal;
+    line-height: inherit;
+  }
+
+  .selectize-dropdown{
+    &.active{
+      background-color: #f6f6f6;
+      color: #495c68;
+    }
+  }
+
+  .selectize-input{
+    height: 3rem;
+    padding: .5rem;
+
+    input{
+      height: auto;
+    }
+  }
+
+  .selectize-dropdown-content{
+    .selectize__label{
+      font-size: inherit;
+      display: block;
+    }
+
+    .selecize__caption{
+      font-size: 12px;
+      display: block;
+      opacity: .5;
+    }
+  }
+}

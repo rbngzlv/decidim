@@ -33,7 +33,7 @@ module Decidim
             it "returns the id, name and nickname for filtered users" do
               params[:term] = user.name.to_s
               get :users, format: :json, params: params
-              expect(response.body).to eq([[user.id, user.name, user.nickname]].to_json)
+              expect(response.body).to eq([{ value: user.id, label: user.name, caption: "@#{user.nickname}" }].to_json)
             end
           end
 
@@ -41,7 +41,7 @@ module Decidim
             it "returns the id, name and nickname for filtered users" do
               params[:term] = "@#{user.nickname}"
               get :users, format: :json, params: params
-              expect(response.body).to eq([[user.id, user.name, user.nickname]].to_json)
+              expect(response.body).to eq([{ value: user.id, label: user.name, caption: "@#{user.nickname}" }].to_json)
             end
           end
         end

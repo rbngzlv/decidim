@@ -8,7 +8,7 @@
   <div class="card-section">
     <div class="user-fields">
       <div class="row column">
-        <%= form.select :existing_user, [[t(".non_user"), false], [t(".existing_user"), true]] %>
+        <%= form.select :existing_user, [[t(".non_user"), false], [t(".existing_user"), true]], label: t(".user_type") %>
       </div>
 
       <div class="row column user-fields--full-name">
@@ -16,10 +16,9 @@
       </div>
 
       <div class="row column user-fields--user-picker">
-        <% picker_text = form.object.user.present? ? "#{form.object.user.name} (@#{form.object.user.nickname})" : "" %>
-        <%= form.text_field :user_picker, value: picker_text, label: t(".user"), placeholder: t(".select_user"),
-                            class: "user-autocomplete", data: { url: users_assembly_members_url(assembly_slug: @current_assembly.slug) } %>
-        <%= form.hidden_field :user_id %>
+        <% options = (user = form.object.user.presence) ? [[user.name, user.id]] : [] %>
+        <%= form.select :user_id, [], { label: t(".user") }, { data: { search_url: users_assembly_members_url(assembly_slug: @current_assembly.slug),
+          options: [{value: user.id, label: user.name, caption: user.nickname}].to_json, items: [user.id].to_json } } %>
       </div>
     </div>
 
